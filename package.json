@@ -12,7 +12,8 @@
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^5.16.1",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "mongodb": "^6.8.0"
   },
   "devDependencies": {
     "prisma": "^5.16.1"
