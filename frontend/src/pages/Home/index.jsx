@@ -1,6 +1,23 @@
 import './style.css';
 
 function Home() {
+  const users = [
+    {
+      name: 'Nome',
+      username: 'Usuário',
+      age: 'Idade',
+      email: 'E-mail',
+      password: 'Senha',
+    },
+    {
+      name: 'Nome2',
+      username: 'Usuário2',
+      age: 'Idade2',
+      email: 'E-mail2',
+      password: 'Senha2',
+    },
+  ];
+
   return (
     <div className="container">
       <form action="">
@@ -25,16 +42,18 @@ function Home() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Nome</td>
-              <td>Usuário</td>
-              <td>Idade</td>
-              <td>E-mail</td>
-              <td>Senha</td>
-              <td>
-                <span className="material-symbols-outlined">delete</span>
-              </td>
-            </tr>
+            {users.map((user) => (
+              <tr key={user.id}>
+                <td>{user.name}</td>
+                <td>{user.username}</td>
+                <td>{user.age}</td>
+                <td>{user.email}</td>
+                <td>{user.password}</td>
+                <td>
+                  <span className="material-symbols-outlined">delete</span>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
