@@ -1,6 +1,6 @@
 import './style.css';
 
-function Home() {
+function Usuario() {
   const users = [
     {
       name: 'Nome',
@@ -61,4 +61,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Usuario;
