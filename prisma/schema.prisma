@@ -19,3 +19,31 @@ model User {
   name  String
   age   String?
 }
+
+model User {
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  email String  @unique
+  name  String
+  age   String?
+}
+
+model Anime {
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  email String  @unique
+  name  String
+  age   String?
+}
+
+model Filme {
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  email String  @unique
+  name  String
+  age   String?
+}
+
+model Manga {
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  email String  @unique
+  name  String
+  age   String?
+}
