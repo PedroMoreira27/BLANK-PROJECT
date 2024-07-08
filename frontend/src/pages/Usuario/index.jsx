@@ -1,33 +1,55 @@
 import './style.css';
+import { useEffect, useState, useRef } from 'react';
+import api from '../../services/api';
 
 function Usuario() {
-  const users = [
-    {
-      name: 'Nome',
-      username: 'Usuário',
-      age: 'Idade',
-      email: 'E-mail',
-      password: 'Senha',
-    },
-    {
-      name: 'Nome2',
-      username: 'Usuário2',
-      age: 'Idade2',
-      email: 'E-mail2',
-      password: 'Senha2',
-    },
-  ];
+  const [users, setUsers] = useState([]);
+
+  const nameRef = useRef();
+  const usernameRef = useRef();
+  const ageRef = useRef();
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  
+  async function getUsers() {
+    const usersFromApi = await api.get('/usuarios');
+  
+    setUsers(usersFromApi.data);
+    console.log(users);
+  }
+
+  async function createUser() {
+    const user = {
+      name: nameRef.current.value,
+      username: usernameRef.current.value,
+      age: ageRef.current.value,
+      email: emailRef.current.value,
+      password: passwordRef.current.value
+    };
+  
+    await api.post('/usuarios', user);
+    getUsers();
+  }
+
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   return (
     <div className="container">
       <form action="">
         <h1>Cadastro Usuario</h1>
-        <input type="text" name="name" id="name" />
-        <input type="text" name="username" id="username" />
-        <input type="number" name="age" id="age" />
-        <input type="email" name="email" id="email" />
-        <input type="text" name="password" id="password" />
-        <button type="button">Cadastrar</button>
+        <label htmlFor="name">Nome</label>
+        <input type="text" name="name" id="name" ref={nameRef} />
+        <label htmlFor="username">Usuário</label>
+        <input type="text" name="username" id="username" ref={usernameRef} />
+        <label htmlFor="age">Idade</label>
+        <input type="number" name="age" id="age" ref={ageRef} />
+        <label htmlFor="email">E-mail</label>
+        <input type="email" name="email" id="email" ref={emailRef} />
+        <label htmlFor="password">Senha</label>
+        <input type="text" name="password" id="password" ref={passwordRef} />
+        <button type="button" onClick={createUser}>Cadastrar</button>
       </form>
       <div>
         <h1>Lista de Usúários</h1>

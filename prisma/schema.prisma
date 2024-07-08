@@ -14,36 +14,37 @@ datasource db {
 }
 
 model User {
-  id    String  @id @default(auto()) @map("_id") @db.ObjectId
-  email String  @unique
-  name  String
-  age   String?
-}
-
-model User {
-  id    String  @id @default(auto()) @map("_id") @db.ObjectId
-  email String  @unique
-  name  String
-  age   String?
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  email    String  @unique
+  name     String
+  password String
+  username String
+  age      String?
 }
 
 model Anime {
-  id    String  @id @default(auto()) @map("_id") @db.ObjectId
-  email String  @unique
-  name  String
-  age   String?
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  genre       String?
+  year        String?
+  duration    String?
+  chapters    String?
+  description String?
 }
 
 model Filme {
-  id    String  @id @default(auto()) @map("_id") @db.ObjectId
-  email String  @unique
-  name  String
-  age   String?
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  genre       String?
+  year        String?
+  description String?
 }
 
 model Manga {
-  id    String  @id @default(auto()) @map("_id") @db.ObjectId
-  email String  @unique
-  name  String
-  age   String?
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  genre       String?
+  year        String?
+  chapters    String?
+  description String?
 }

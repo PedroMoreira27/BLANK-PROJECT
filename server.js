@@ -1,10 +1,12 @@
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
+import cors from 'cors';
 
 const prisma = new PrismaClient();
 
 const app = express();
 app.use(express.json());
+app.use(cors()); //mudar para url do frontend para segurança
 
 app.post('/usuarios', async (req, res) => {
   try {
@@ -31,6 +33,8 @@ app.put('/usuarios/:id', async (req, res) => {
         name: req.body.name,
         age: req.body.age,
         email: req.body.emai,
+        password: req.body.password,
+        username: req.body.username
       },
     });
     res.status(201).json(user);
@@ -57,6 +61,8 @@ app.get('/usuarios', async (req, res) => {
         name: req.query.name,
         email: req.query.email,
         age: req.query.age,
+        username: req.query.username,
+        password: req.query.password
       },
     });
   } else {
@@ -77,12 +83,6 @@ app.delete('/usuarios/:id', async (req, res) => {
   }
 });
 
-app.listen(3000, () => {
-  console.log('Servidor rodando na porta 3000');
-});
-
-
-
 app.post('/anime', async (req, res) => {
   try {
     const user = await prisma.user.create({
@@ -90,6 +90,8 @@ app.post('/anime', async (req, res) => {
         name: req.body.name,
         age: req.body.age,
         email: req.body.email,
+        username: req.query.username,
+        password: req.query.password
       },
     });
     res.status(201).json(user);
@@ -108,6 +110,8 @@ app.put('/anime/:id', async (req, res) => {
         name: req.body.name,
         age: req.body.age,
         email: req.body.emai,
+        username: req.query.username,
+        password: req.query.password
       },
     });
     res.status(201).json(user);
@@ -153,11 +157,6 @@ app.delete('/anime/:id', async (req, res) => {
     res.status(500).json({ error: 'Erro ao criar usuário' });
   }
 });
-
-app.listen(3000, () => {
-  console.log('Servidor rodando na porta 3000');
-});
-
 
 app.post('/filme', async (req, res) => {
   try {
@@ -229,11 +228,6 @@ app.delete('/filme/:id', async (req, res) => {
     res.status(500).json({ error: 'Erro ao criar usuário' });
   }
 });
-
-app.listen(3000, () => {
-  console.log('Servidor rodando na porta 3000');
-});
-
 
 app.post('/manga', async (req, res) => {
   try {

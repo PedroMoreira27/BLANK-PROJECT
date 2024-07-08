@@ -6,14 +6,12 @@ function Filmes() {
       name: "Nome",
       genre: "Genero",
       year: "Ano",
-      duration: "Duração",
       description: "Descrição",
     },
     {
       name: "Nome2",
       genre: "Genero2",
       year: "Ano2",
-      duration: "Duração2",
       description: "Descrição2",
     },
   ];
