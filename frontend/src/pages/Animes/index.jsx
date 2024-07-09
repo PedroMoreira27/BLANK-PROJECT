@@ -1,38 +1,53 @@
+import { useState, useEffect, useRef } from "react";
+import axios from "axios";
 import "./style.css";
 
-function Filmes() {
-  const movies = [
-    {
-      name: "Nome",
-      genre: "Genero",
-      year: "Ano",
-      duration: "Duração",
-      chapters: "12",
-      description: "Descrição",
-    },
-    {
-      name: "Nome2",
-      genre: "Genero2",
-      year: "Ano2",
-      duration: "Duração2",
-      chapters: "24",
-      description: "Descrição2",
-    },
-  ];
+function Animes() {
+  const [animes, setAnimes] = useState([]);
+  const nameRef = useRef();
+  const genreRef = useRef();
+  const yearRef = useRef();
+  const durationRef = useRef();
+  const descriptionRef = useRef();
+  const chaptersRef = useRef();
+
+  async function getAnimes() {
+    const animesFromApi = await axios.get('/animes');
+    setAnimes(animesFromApi.data);
+  }
+
+  async function createAnime() {
+    const anime = {
+      name: nameRef.current.value,
+      genre: genreRef.current.value,
+      year: yearRef.current.value,
+      duration: durationRef.current.value,
+      description: descriptionRef.current.value,
+      chapters: chaptersRef.current.value,
+    };
+
+    await axios.post('/animes', anime);
+    getAnimes();
+  }
+
+  useEffect(() => {
+    getAnimes();
+  }, []);
 
   return (
     <div className="container">
       <form action="">
-        <h1>Cadastro de Filmes</h1>
-        <input type="text" name="name" id="name" />
-        <input type="text" name="genre" id="genre" />
-        <input type="number" name="year" id="year" />
-        <input type="number" name="duration" id="duration" />
-        <input type="text" name="description" id="description" />
-        <button type="button">Cadastrar</button>
+        <h1>Cadastro de Animes</h1>
+        <input type="text" name="name" id="name" ref={nameRef} />
+        <input type="text" name="genre" id="genre" ref={genreRef} />
+        <input type="number" name="year" id="year" ref={yearRef} />
+        <input type="number" name="duration" id="duration" ref={durationRef} />
+        <input type="text" name="chapters" id="chapters" ref={chaptersRef} />
+        <input type="text" name="description" id="description" ref={descriptionRef} />
+        <button type="button" onClick={createAnime}>Cadastrar</button>
       </form>
       <div>
-        <h1>Lista de Filmes</h1>
+        <h1>Lista de Animes</h1>
         <table>
           <thead>
             <tr>
@@ -40,18 +55,19 @@ function Filmes() {
               <th>Genero</th>
               <th>Ano</th>
               <th>Duração</th>
+              <th>Capítulos</th>
               <th>Descrição</th>
             </tr>
           </thead>
           <tbody>
-            {movies.map((movie) => (
-              <tr key={movie.id}>
-                <td>{movie.name}</td>
-                <td>{movie.genre}</td>
-                <td>{movie.year}</td>
-                <td>{movie.duration}</td>
-                <td>{movie.chapters}</td>
-                <td>{movie.description}</td>
+            {animes.map((anime) => (
+              <tr key={anime.id}>
+                <td>{anime.name}</td>
+                <td>{anime.genre}</td>
+                <td>{anime.year}</td>
+                <td>{anime.duration}</td>
+                <td>{anime.chapters}</td>
+                <td>{anime.description}</td>
                 <td>
                   <span className="material-symbols-outlined">delete</span>
                 </td>
@@ -64,4 +80,4 @@ function Filmes() {
   );
 }
 
-export default Filmes;
+export default Animes;

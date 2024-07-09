@@ -1,35 +1,54 @@
-import "./style.css";
+import { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
+import './style.css';
 
 function Mangas() {
-  const movies = [
-    {
-      name: "Nome",
-      genre: "Genero",
-      year: "Ano",
-      duration: "23:00",
-      chapters: "23",
-      description: "Descrição",
-    },
-    {
-      name: "Nome2",
-      genre: "Genero2",
-      year: "Ano2",      
-      duration: "23:00",
-      chapters: "99",
-      description: "Descrição2",
-    },
-  ];
+  const [mangas, setMangas] = useState([]);
+  const nameRef = useRef();
+  const genreRef = useRef();
+  const yearRef = useRef();
+  const chaptersRef = useRef();
+  const descriptionRef = useRef();
+
+  async function getMangas() {
+    const mangasFromApi = await axios.get('/mangas');
+    setMangas(mangasFromApi.data);
+  }
+
+  async function createManga() {
+    const manga = {
+      name: nameRef.current.value,
+      genre: genreRef.current.value,
+      year: yearRef.current.value,
+      chapters: chaptersRef.current.value,
+      description: descriptionRef.current.value,
+    };
+
+    await axios.post('/mangas', manga);
+    getMangas();
+  }
+
+  useEffect(() => {
+    getMangas();
+  }, []);
 
   return (
     <div className="container">
       <form action="">
         <h1>Cadastro de Mangas</h1>
-        <input type="text" name="name" id="name" />
-        <input type="text" name="genre" id="genre" />
-        <input type="number" name="year" id="year" />
-        <input type="number" name="chapters" id="chapters" />
-        <input type="text" name="description" id="description" />
-        <button type="button">Cadastrar</button>
+        <input type="text" name="name" id="name" ref={nameRef} />
+        <input type="text" name="genre" id="genre" ref={genreRef} />
+        <input type="number" name="year" id="year" ref={yearRef} />
+        <input type="number" name="chapters" id="chapters" ref={chaptersRef} />
+        <input
+          type="text"
+          name="description"
+          id="description"
+          ref={descriptionRef}
+        />
+        <button type="button" onClick={createManga}>
+          Cadastrar
+        </button>
       </form>
       <div>
         <h1>Lista de Mangas</h1>
@@ -39,18 +58,18 @@ function Mangas() {
               <th>Nome</th>
               <th>Genero</th>
               <th>Ano</th>
-              <th>Duração</th>
+              <th>Capítulos</th>
               <th>Descrição</th>
             </tr>
           </thead>
           <tbody>
-            {movies.map((movie) => (
-              <tr key={movie.id}>
-                <td>{movie.name}</td>
-                <td>{movie.genre}</td>
-                <td>{movie.year}</td>
-                <td>{movie.chapters}</td>
-                <td>{movie.description}</td>
+            {mangas.map((manga) => (
+              <tr key={manga.id}>
+                <td>{manga.name}</td>
+                <td>{manga.genre}</td>
+                <td>{manga.year}</td>
+                <td>{manga.chapters}</td>
+                <td>{manga.description}</td>
                 <td>
                   <span className="material-symbols-outlined">delete</span>
                 </td>
