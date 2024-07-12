@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import Usuario from './pages/Usuario';
 import Mangas from './pages/Mangas';
 import Animes from './pages/Animes';
+import AnimesGeral from './pages/Animes/animes';
 import Filmes from './pages/Filmes';
 import Home from './pages/Home';
 import './index.css';
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
   {
     path: '/animes',
     element: <Animes />,
+  },
+  {
+    path: '/animesGeral',
+    element: <AnimesGeral />,
   },
   {
     path: '/filmes',
